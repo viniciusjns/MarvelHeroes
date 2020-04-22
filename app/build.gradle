@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+HashMap<String, String> baseDependencies = rootProject.ext.dependencies
+HashMap<String, String> testDependencies = rootProject.ext.testDependencies
+HashMap<String, String> application = rootProject.ext.application
+HashMap<String, String> versions = rootProject.ext.versions
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        applicationId application.applicationId
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode application.versionCode
+        versionName "$application.versionName"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField("String", "PRIVATE_KEY", properties.getProperty("privateKey", ""))
+        buildConfigField("String", "PUBLIC_KEY", properties.getProperty("publicKey", ""))
+        buildConfigField("String", "TS", properties.getProperty("ts", ""))
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation baseDependencies.kotlin_std_lib
+    implementation baseDependencies.coroutines_core
+    implementation baseDependencies.coroutines
+    implementation baseDependencies.coroutines_adapter
+
+    implementation baseDependencies.app_compat
+    implementation baseDependencies.core
+
+    implementation baseDependencies.constraint_layout
+
+    implementation baseDependencies.dagger2
+    implementation baseDependencies.dagger2_android_support
+    kapt baseDependencies.dagger2_compiler
+    kapt baseDependencies.dagger2_android_processor
+
+    implementation baseDependencies.okHttp_interceptor
+    implementation baseDependencies.gson
+    implementation baseDependencies.retrofit_converter_gson
+
+    implementation baseDependencies.multi_state_layout
+
+    implementation baseDependencies.multidex
+
+    implementation baseDependencies.arch_lifecycle_extensions
+
+    implementation baseDependencies.picasso
+
+    kapt baseDependencies.arch_lifecycle_compiler
+
+    testImplementation testDependencies.junit
+    androidTestImplementation testDependencies.extJUnit
+    androidTestImplementation testDependencies.espresso
+}
