@@ -6,17 +6,16 @@ import com.vinicius.marvelheroes.service.HeroesService
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
-    private val apiClient: APIClient
+    private val service: HeroesService
 ) : MainRepository {
 
-    override suspend fun getHeroes(): DataHeroes = withContext(IO) {
-//        async {
-            apiClient.getRetrofit().create(HeroesService::class.java).getHeroes()
-//        }
+    override suspend fun getHeroes(): DataHeroes {
+        return service.getHeroes()
     }
 
 }

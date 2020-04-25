@@ -3,6 +3,7 @@ package com.vinicius.marvelheroes.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.whenever
 import com.vinicius.marvelheroes.model.DataHeroes
 import com.vinicius.marvelheroes.model.Hero
 import com.vinicius.marvelheroes.model.Heroes
@@ -28,8 +29,8 @@ class MainViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-//    @get:Rule
-//    val testCoroutineRule = TestCoroutineRule()
+    @get:Rule
+    val testCoroutineRule = TestCoroutineRule()
 
     private lateinit var mainViewModel: MainViewModel
     @Mock
@@ -40,13 +41,9 @@ class MainViewModelTest {
     private lateinit var loadingLiveData: Observer<Boolean>
     @Mock
     private lateinit var errorLiveData: Observer<Throwable>
-
-    private val testCoroutineDispatcher = TestCoroutineDispatcher()
-
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        Dispatchers.setMain(testCoroutineDispatcher)
         mainViewModel = MainViewModel(mainRepository)
         mainViewModel.heroesMutableLiveData.observeForever(heroesLiveData)
         mainViewModel.loadingMutableLiveData.observeForever(loadingLiveData)
@@ -54,24 +51,19 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `heroes livedata should return some value test`() = runBlocking {
-        //
+    fun `heroes livedata should return some value test`() = testCoroutineRule.runBlockingTest {
+        // cenario
         val heroList = mockHeroes()
         val heroes = Heroes(heroList)
         val dataHeroes = DataHeroes(heroes)
-//        val deferred = CompletableDeferred(dataHeroes)
 
-        //
-        Mockito.`when`(mainRepository.getHeroes()).thenReturn(dataHeroes)
+        // acao
+        whenever(mainRepository.getHeroes()).thenReturn(dataHeroes)
         mainViewModel.getHeroes()
-        Mockito.verify(loadingLiveData).onChanged(true)
         val value = mainViewModel.heroesMutableLiveData.value
 
-
-        //
-//        assertThat(value, `is`(heroList))
-//        Mockito.verify(mainRepository).getHeroes()
-        Mockito.verify(heroesLiveData).onChanged(heroList)
+        // verifacao
+        assertThat(value, `is`(heroList))
     }
 
     private fun mockHeroes() = (1..10).map {

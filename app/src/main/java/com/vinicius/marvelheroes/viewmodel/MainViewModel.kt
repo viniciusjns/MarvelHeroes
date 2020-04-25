@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
-) : BaseViewModel(), CoroutineScope {
+) : BaseViewModel() {
 
     val loadingMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val heroesMutableLiveData: MutableLiveData<List<Hero>> = MutableLiveData()
@@ -19,10 +19,10 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             loadingMutableLiveData.value = true
             try {
-//                if (heroesMutableLiveData.value == null) {
+                if (heroesMutableLiveData.value == null) {
                     val heroes = mainRepository.getHeroes()
                     heroesMutableLiveData.value = heroes.data.results
-//                }
+                }
                 loadingMutableLiveData.value = false
             } catch (t: Throwable) {
                 errorMutableLiveData.value = t
@@ -31,4 +31,16 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+//    fun getHeroes() {
+//        viewModelScope.launch {
+//            loadingMutableLiveData.value = true
+//            runCatching {
+//                heroesMutableLiveData.value = mainUseCase.getHeroes()
+//                loadingMutableLiveData.value = false
+//            }.onFailure {
+//                errorMutableLiveData.value = it
+//            }
+//        }
+//    }
 }

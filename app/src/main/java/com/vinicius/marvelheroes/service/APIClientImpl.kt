@@ -13,8 +13,6 @@ import java.util.concurrent.TimeUnit
 
 class APIClientImpl : APIClient {
 
-    private lateinit var mRetrofit: Retrofit
-
     companion object {
         private const val TIMEOUT = 360
 
@@ -54,8 +52,6 @@ class APIClientImpl : APIClient {
             return okHttp.build()
         }
 
-    override fun getRetrofit(): Retrofit = mRetrofit
-
     private val loggingCapableHttpClient: HttpLoggingInterceptor
         get() {
             val mLogging = HttpLoggingInterceptor()
@@ -68,14 +64,12 @@ class APIClientImpl : APIClient {
         instance = this
     }
 
-    override fun configure(baseUrl: String) {
-        val mClient = client
-
-        mRetrofit = Retrofit.Builder()
+    override fun configure(baseUrl: String): Retrofit =
+        Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(mClient)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-//            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
-    }
+
 }
