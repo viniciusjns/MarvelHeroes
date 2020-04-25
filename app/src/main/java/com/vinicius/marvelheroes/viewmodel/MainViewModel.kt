@@ -11,23 +11,23 @@ class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : BaseViewModel(), CoroutineScope {
 
-    val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loadingMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val heroesMutableLiveData: MutableLiveData<List<Hero>> = MutableLiveData()
     val errorMutableLiveData: MutableLiveData<Throwable> = MutableLiveData()
 
     fun getHeroes() {
         viewModelScope.launch {
-            loading.value = true
+            loadingMutableLiveData.value = true
             try {
-                if (heroesMutableLiveData.value == null) {
-                    val teste = mainRepository.getHeroes().await()
-                    heroesMutableLiveData.value = teste.data.results
-                }
-                loading.value = false
+//                if (heroesMutableLiveData.value == null) {
+                    val heroes = mainRepository.getHeroes()
+                    heroesMutableLiveData.value = heroes.data.results
+//                }
+                loadingMutableLiveData.value = false
             } catch (t: Throwable) {
                 errorMutableLiveData.value = t
             } finally {
-                loading.value = false
+                loadingMutableLiveData.value = false
             }
         }
     }

@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.vinicius.marvelheroes.view.MainActivity"></activity>
+        <activity android:name="com.vinicius.marvelheroes.view.activities.MainActivity"></activity>
         <activity
-            android:name="com.vinicius.marvelheroes.view.SplashActivity"
+            android:name="com.vinicius.marvelheroes.view.activities.SplashActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,7 +1,10 @@
-package com.vinicius.marvelheroes.view
+package com.vinicius.marvelheroes.view.activities
 
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vinicius.marvelheroes.R
+import com.vinicius.marvelheroes.model.Hero
+import com.vinicius.marvelheroes.view.adapters.HeroesAdapter
 import com.vinicius.marvelheroes.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,8 +18,14 @@ class MainActivity : BaseActivity<MainViewModel>() {
         viewModel.getHeroes()
 
         viewModel.heroesMutableLiveData.observe(this, Observer {
-            text.text = it[0].name
+            setupList(it)
         })
+    }
+
+    private fun setupList(list: List<Hero>) {
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvHeroes.adapter = HeroesAdapter(list)
+        rvHeroes.layoutManager = layoutManager
     }
 
 

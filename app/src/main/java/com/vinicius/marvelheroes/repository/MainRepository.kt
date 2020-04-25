@@ -5,5 +5,5 @@ import kotlinx.coroutines.Deferred
 
 interface MainRepository {
 
-    suspend fun getHeroes(): Deferred<DataHeroes>
+    suspend fun getHeroes(): DataHeroes
 }

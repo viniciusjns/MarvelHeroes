@@ -30,6 +30,7 @@ class APIClientImpl : APIClient {
 //            .addQueryParameter("hash", "7c4c652b6b8ca320fdb12bde65294920") //md5(ts+privateKey+publicKey)
             .addQueryParameter("hash", getHash()) //md5(ts+privateKey+publicKey)
             .addQueryParameter("apikey", BuildConfig.PUBLIC_KEY)
+            .addQueryParameter("limit", "100")
             .build()
 
         val requestBuilder = original.newBuilder().url(url)
@@ -74,7 +75,7 @@ class APIClientImpl : APIClient {
             .baseUrl(baseUrl)
             .client(mClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+//            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
     }
 }

@@ -13,10 +13,10 @@ class MainRepositoryImpl @Inject constructor(
     private val apiClient: APIClient
 ) : MainRepository {
 
-    override suspend fun getHeroes(): Deferred<DataHeroes> = withContext(IO) {
-        async {
-            apiClient.getRetrofit().create(HeroesService::class.java).getHeroes().await()
-        }
+    override suspend fun getHeroes(): DataHeroes = withContext(IO) {
+//        async {
+            apiClient.getRetrofit().create(HeroesService::class.java).getHeroes()
+//        }
     }
 
 }
