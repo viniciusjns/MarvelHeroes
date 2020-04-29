@@ -11,7 +11,7 @@ class MainUseCase(
 
     suspend fun getHeroes(): List<Hero> {
         return withContext(Dispatchers.IO) {
-            mainRepository.getHeroes().data.results
+            mainRepository.getHeroes()
         }
     }
 

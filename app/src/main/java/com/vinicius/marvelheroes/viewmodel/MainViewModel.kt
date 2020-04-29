@@ -19,11 +19,8 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             loadingMutableLiveData.value = true
             try {
-                if (heroesMutableLiveData.value == null) {
-                    val heroes = mainRepository.getHeroes()
-                    heroesMutableLiveData.value = heroes.data.results
-                }
-                loadingMutableLiveData.value = false
+                val heroes = mainRepository.getHeroes()
+                heroesMutableLiveData.value = heroes
             } catch (t: Throwable) {
                 errorMutableLiveData.value = t
             } finally {

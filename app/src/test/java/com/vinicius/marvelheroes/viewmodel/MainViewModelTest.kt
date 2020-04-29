@@ -1,29 +1,24 @@
 package com.vinicius.marvelheroes.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import com.vinicius.marvelheroes.model.DataHeroes
 import com.vinicius.marvelheroes.model.Hero
-import com.vinicius.marvelheroes.model.Heroes
 import com.vinicius.marvelheroes.repository.MainRepository
 import com.vinicius.marvelheroes.rules.TestCoroutineRule
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
 import org.hamcrest.CoreMatchers.`is`
-import org.junit.Assert.assertThat
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
 
     @get:Rule
@@ -36,34 +31,59 @@ class MainViewModelTest {
     @Mock
     private lateinit var mainRepository: MainRepository
     @Mock
-    private lateinit var heroesLiveData: Observer<List<Hero>>
+    private lateinit var observerLoading: Observer<Boolean>
     @Mock
-    private lateinit var loadingLiveData: Observer<Boolean>
-    @Mock
-    private lateinit var errorLiveData: Observer<Throwable>
+    private lateinit var observerError: Observer<Throwable>
+
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
         mainViewModel = MainViewModel(mainRepository)
-        mainViewModel.heroesMutableLiveData.observeForever(heroesLiveData)
-        mainViewModel.loadingMutableLiveData.observeForever(loadingLiveData)
-        mainViewModel.errorMutableLiveData.observeForever(errorLiveData)
+        mainViewModel.loadingMutableLiveData.observeForever(observerLoading)
+        mainViewModel.errorMutableLiveData.observeForever(observerError)
     }
 
     @Test
-    fun `heroes livedata should return some value test`() = testCoroutineRule.runBlockingTest {
+    fun `teste get heroes when success`() = testCoroutineRule.runBlockingTest {
         // cenario
         val heroList = mockHeroes()
-        val heroes = Heroes(heroList)
-        val dataHeroes = DataHeroes(heroes)
+        whenever(mainRepository.getHeroes()).thenReturn(heroList)
 
         // acao
-        whenever(mainRepository.getHeroes()).thenReturn(dataHeroes)
         mainViewModel.getHeroes()
         val value = mainViewModel.heroesMutableLiveData.value
 
         // verifacao
         assertThat(value, `is`(heroList))
+    }
+
+    @Test
+    fun `test get heroes when throw exception`() = testCoroutineRule.runBlockingTest {
+        // cenario
+        val exception = RuntimeException()
+        whenever(mainRepository.getHeroes()).thenThrow(exception)
+
+        // acao
+        mainViewModel.getHeroes()
+
+        // verificacao
+        assertNotNull(mainViewModel.errorMutableLiveData.value)
+        assertNull(mainViewModel.heroesMutableLiveData.value)
+    }
+
+    @Test
+    fun `test loading should change`() = testCoroutineRule.runBlockingTest {
+        // cenario
+        val bool = false
+
+        // acao
+        mainViewModel.getHeroes()
+
+        // verificacao
+        val captor = ArgumentCaptor.forClass(Boolean::class.java)
+        captor.run {
+            verify(observerLoading, times(2)).onChanged(capture())
+            assertEquals(bool, value)
+        }
     }
 
     private fun mockHeroes() = (1..10).map {
