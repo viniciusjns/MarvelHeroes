@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MarvelHeroes</string>
+    <string name="action_list">list</string>
+    <string name="action_column">column</string>
 </resources>
