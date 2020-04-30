@@ -13,11 +13,14 @@ import com.vinicius.marvelheroes.databinding.ItemHeroListBinding
 import com.vinicius.marvelheroes.model.Hero
 
 
-class HeroesListAdapter(heroes: List<Hero>) : BaseAdapter<ItemHeroListBinding>(heroes) {
+class HeroesListAdapter(heroes: List<Hero>, private val onClickHero: OnClickHero) : BaseAdapter<ItemHeroListBinding>(heroes) {
 
     override fun getLayout(): Int = R.layout.item_hero_list
 
     override fun onBind(binding: ItemHeroListBinding, hero: Hero) {
+        binding.root.setOnClickListener {
+            onClickHero.onClick(hero)
+        }
         binding.tvName.text = hero.name
         Picasso.get()
             .load("${hero.thumbnail?.path}.${hero.thumbnail?.extension}")

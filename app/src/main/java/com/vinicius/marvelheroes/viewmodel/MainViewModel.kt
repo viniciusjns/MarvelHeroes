@@ -2,8 +2,8 @@ package com.vinicius.marvelheroes.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.vinicius.marvelheroes.model.Hero
+import com.vinicius.marvelheroes.model.Resource
 import com.vinicius.marvelheroes.repository.MainRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -11,21 +11,17 @@ class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : BaseViewModel() {
 
-    val loadingMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    val heroesMutableLiveData: MutableLiveData<List<Hero>> = MutableLiveData()
-    val errorMutableLiveData: MutableLiveData<Throwable> = MutableLiveData()
+    val resourceLiveData = MutableLiveData<Resource<List<Hero>>>()
 
     fun getHeroes() {
         viewModelScope.launch {
-            loadingMutableLiveData.value = true
+            resourceLiveData.value = Resource.loading()
             try {
                 val heroes = mainRepository.getHeroes()
-                heroesMutableLiveData.value = heroes
+                resourceLiveData.value = Resource.success(heroes)
             } catch (t: Throwable) {
-                errorMutableLiveData.value = t
-            } finally {
-                loadingMutableLiveData.value = false
-            }
+                resourceLiveData.value = Resource.error(t.message)
+            } finally { }
         }
     }
 

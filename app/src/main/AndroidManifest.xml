@@ -5,22 +5,26 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.vinicius.marvelheroes.MarvelHeroesApplication"
+        android:name=".MarvelHeroesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.vinicius.marvelheroes.view.activities.MainActivity"></activity>
+
         <activity
-            android:name="com.vinicius.marvelheroes.view.activities.SplashActivity"
+            android:name=".view.activities.SplashActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.activities.HeroDetailActivity"/>
+        <activity android:name=".view.activities.MainActivity" />
     </application>
 
 </manifest>

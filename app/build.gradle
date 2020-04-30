@@ -56,7 +56,6 @@ dependencies {
     implementation baseDependencies.support_design
     implementation baseDependencies.recycler_view
     implementation baseDependencies.constraint_layout
-    implementation 'com.android.support:palette-v7:28.0.0'
 
     implementation baseDependencies.dagger2
     implementation baseDependencies.dagger2_android_support
@@ -67,13 +66,14 @@ dependencies {
     implementation baseDependencies.gson
     implementation baseDependencies.retrofit_converter_gson
 
-    implementation baseDependencies.multi_state_layout
-
     implementation baseDependencies.multidex
 
     implementation baseDependencies.arch_lifecycle_extensions
 
+    implementation baseDependencies.multi_state_layout
     implementation baseDependencies.picasso
+    implementation baseDependencies.palette
+    implementation baseDependencies.circle_image_view
 
     kapt baseDependencies.arch_lifecycle_compiler
     kapt baseDependencies.data_binding
