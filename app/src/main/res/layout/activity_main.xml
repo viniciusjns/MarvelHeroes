@@ -5,10 +5,6 @@
 
     <data>
         <import type="br.com.zup.multistatelayout.MultiStateLayout" />
-
-        <variable
-            name="viewModel"
-            type="com.vinicius.marvelheroes.viewmodel.MainViewModel" />
     </data>
 
     <br.com.zup.multistatelayout.MultiStateLayout
@@ -22,6 +18,13 @@
             android:layout_height="match_parent"
             android:background="@color/colorGray">
 
+            <androidx.appcompat.widget.Toolbar
+                style="@style/toolbar"
+                android:id="@+id/toolbarMain"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHeroes"
                 android:layout_width="0dp"
@@ -29,7 +32,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarMain"
                 tools:listitem="@layout/item_hero_column" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

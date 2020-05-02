@@ -22,7 +22,7 @@ class HeroesListAdapter(heroes: List<Hero>, private val onClickHero: OnClickHero
         binding.root.setOnClickListener {
             onClickHero.onClick(hero)
         }
-        binding.tvName.text = hero.name
+        binding.hero = hero
         Picasso.get()
             .load(hero.thumbnail?.getPoster())
             .into(binding.ivHero, object : Callback {

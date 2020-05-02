@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.zup.multistatelayout.MultiStateLayout
 import com.google.gson.Gson
 import com.vinicius.marvelheroes.R
+import com.vinicius.marvelheroes.databinding.ActivityMainBinding
 import com.vinicius.marvelheroes.model.Hero
 import com.vinicius.marvelheroes.model.Resource
 import com.vinicius.marvelheroes.view.activities.MainActivity.HeroConstant.HERO_ID
@@ -17,7 +18,7 @@ import com.vinicius.marvelheroes.view.adapters.OnClickHero
 import com.vinicius.marvelheroes.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OnClickHero {
 
     object HeroConstant {
         const val HERO_ID = "HERO_ID"
@@ -30,7 +31,7 @@ class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
     override fun getViewModelClass(): Class<MainViewModel>? = MainViewModel::class.java
 
     override fun init() {
-//        binding.viewModel = viewModel
+        setupToolbar()
         viewModel.getHeroes()
 
         viewModel.heroesLiveData.observe(this, Observer {
@@ -45,6 +46,11 @@ class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
                 }
             }
         })
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbarMain)
+        toolbarMain.title = "Marvel Heroes"
     }
 
     private fun setupList(list: List<Hero>) {
@@ -98,6 +104,5 @@ class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
         }
 
         else -> true
-
     }
 }

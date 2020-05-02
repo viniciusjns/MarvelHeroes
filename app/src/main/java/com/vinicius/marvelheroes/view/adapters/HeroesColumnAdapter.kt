@@ -17,7 +17,7 @@ class HeroesColumnAdapter(heroes: List<Hero>, private val onClickHero: OnClickHe
         binding.root.setOnClickListener {
             onClickHero.onClick(hero)
         }
-        binding.tvName.text = hero.name
+        binding.hero = hero
         Picasso.get()
             .load(hero.thumbnail?.getPoster())
             .into(binding.ivHero, object : Callback {

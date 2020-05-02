@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="hero"
+            type="com.vinicius.marvelheroes.model.Hero" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +48,7 @@
                     android:shadowDx="2"
                     android:shadowDy="2"
                     android:shadowRadius="10"
+                    android:text="@{hero.name}"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp"
                     android:gravity="center"
