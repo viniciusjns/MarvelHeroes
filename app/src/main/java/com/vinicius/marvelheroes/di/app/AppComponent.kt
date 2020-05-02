@@ -17,6 +17,9 @@ import javax.inject.Singleton
         modules = [AndroidInjectionModule::class,
             AndroidSupportInjectionModule::class,
             AppModule::class,
+            RepositoryModule::class,
+            UseCaseModule::class,
+            NetworkModule::class,
             ActivityBuilder::class,
             ViewModelBuilder::class
         ]
@@ -26,7 +29,6 @@ interface AppComponent {
 
     @Component.Builder
     interface Builder {
-        fun appModule(appModule: AppModule): Builder
 
         @BindsInstance
         fun application(application: Application): Builder

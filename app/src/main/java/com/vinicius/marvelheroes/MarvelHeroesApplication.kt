@@ -7,6 +7,7 @@ import com.vinicius.marvelheroes.di.app.AppModule
 import com.vinicius.marvelheroes.di.app.DaggerAppComponent
 import com.vinicius.marvelheroes.service.APIClient
 import com.vinicius.marvelheroes.BuildConfig
+import com.vinicius.marvelheroes.di.app.NetworkModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -16,9 +17,6 @@ open class MarvelHeroesApplication : MultiDexApplication(), HasActivityInjector 
 
     @Inject
     lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
-
-    @Inject
-    lateinit var apiClient: APIClient
 
     lateinit var appComponent: AppComponent
 
@@ -32,7 +30,6 @@ open class MarvelHeroesApplication : MultiDexApplication(), HasActivityInjector 
         super.onCreate()
         mInstance = this
         initInjector()
-        configureRetrofit()
     }
 
     private fun initInjector() {
@@ -43,11 +40,6 @@ open class MarvelHeroesApplication : MultiDexApplication(), HasActivityInjector 
     protected open fun getDaggerAppComponent(): AppComponent {
         return DaggerAppComponent.builder()
             .application(this)
-            .appModule(AppModule())
             .build()
-    }
-
-    private fun configureRetrofit() {
-        apiClient.configure("https://gateway.marvel.com/")
     }
 }

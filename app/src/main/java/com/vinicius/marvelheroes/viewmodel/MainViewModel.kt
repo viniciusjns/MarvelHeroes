@@ -2,33 +2,38 @@ package com.vinicius.marvelheroes.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.vinicius.marvelheroes.model.Hero
+import com.vinicius.marvelheroes.model.Resource
 import com.vinicius.marvelheroes.repository.MainRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
-) : BaseViewModel(), CoroutineScope {
+) : BaseViewModel() {
 
-    val loading: MutableLiveData<Boolean> = MutableLiveData()
-    val heroesMutableLiveData: MutableLiveData<List<Hero>> = MutableLiveData()
-    val errorMutableLiveData: MutableLiveData<Throwable> = MutableLiveData()
+    val resourceLiveData = MutableLiveData<Resource<List<Hero>>>()
 
     fun getHeroes() {
         viewModelScope.launch {
-            loading.value = true
+            resourceLiveData.value = Resource.loading()
             try {
-                if (heroesMutableLiveData.value == null) {
-                    val teste = mainRepository.getHeroes().await()
-                    heroesMutableLiveData.value = teste.data.results
-                }
-                loading.value = false
+                val heroes = mainRepository.getHeroes()
+                resourceLiveData.value = Resource.success(heroes)
             } catch (t: Throwable) {
-                errorMutableLiveData.value = t
-            } finally {
-                loading.value = false
-            }
+                resourceLiveData.value = Resource.error(t.message)
+            } finally { }
         }
     }
+
+//    fun getHeroes() {
+//        viewModelScope.launch {
+//            loadingMutableLiveData.value = true
+//            runCatching {
+//                heroesMutableLiveData.value = mainUseCase.getHeroes()
+//                loadingMutableLiveData.value = false
+//            }.onFailure {
+//                errorMutableLiveData.value = it
+//            }
+//        }
+//    }
 }

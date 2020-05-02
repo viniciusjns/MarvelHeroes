@@ -1,4 +1,4 @@
-package com.vinicius.marvelheroes.view
+package com.vinicius.marvelheroes.view.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

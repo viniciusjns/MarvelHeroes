@@ -1,9 +1,8 @@
 package com.vinicius.marvelheroes.repository
 
-import com.vinicius.marvelheroes.model.DataHeroes
-import kotlinx.coroutines.Deferred
+import com.vinicius.marvelheroes.model.Hero
 
 interface MainRepository {
 
-    suspend fun getHeroes(): Deferred<DataHeroes>
+    suspend fun getHeroes(): List<Hero>
 }
