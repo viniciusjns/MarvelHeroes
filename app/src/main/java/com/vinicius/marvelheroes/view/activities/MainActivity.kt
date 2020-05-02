@@ -6,9 +6,11 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.zup.multistatelayout.MultiStateLayout
+import com.google.gson.Gson
 import com.vinicius.marvelheroes.R
 import com.vinicius.marvelheroes.model.Hero
 import com.vinicius.marvelheroes.model.Resource
+import com.vinicius.marvelheroes.view.activities.MainActivity.HeroConstant.HERO_ID
 import com.vinicius.marvelheroes.view.adapters.HeroesColumnAdapter
 import com.vinicius.marvelheroes.view.adapters.HeroesListAdapter
 import com.vinicius.marvelheroes.view.adapters.OnClickHero
@@ -16,6 +18,10 @@ import com.vinicius.marvelheroes.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
+
+    object HeroConstant {
+        const val HERO_ID = "HERO_ID"
+    }
 
     private lateinit var optionsMenu: Menu
 
@@ -27,7 +33,7 @@ class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
 //        binding.viewModel = viewModel
         viewModel.getHeroes()
 
-        viewModel.resourceLiveData.observe(this, Observer {
+        viewModel.heroesLiveData.observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> mslMain.setState(MultiStateLayout.State.LOADING)
                 Resource.Status.SUCCESS -> {
@@ -56,6 +62,13 @@ class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
         rvHeroes.layoutManager = layoutManager
     }
 
+    override fun onClick(hero: Hero) {
+        val intent = Intent(this, HeroDetailActivity::class.java)
+        intent.putExtra(HERO_ID, hero.id)
+
+        startActivity(intent)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         optionsMenu = menu
@@ -69,7 +82,7 @@ class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
                 this.isVisible = true
             }
             item.isVisible = false
-            viewModel.resourceLiveData.value?.data?.let { setupColumn(it) }
+            viewModel.heroesLiveData.value?.data?.let { setupColumn(it) }
 
             true
         }
@@ -79,19 +92,12 @@ class MainActivity : BaseActivity<MainViewModel>(), OnClickHero {
                 this.isVisible = true
             }
             item.isVisible = false
-            viewModel.resourceLiveData.value?.data?.let { setupList(it) }
+            viewModel.heroesLiveData.value?.data?.let { setupList(it) }
 
             true
         }
 
         else -> true
 
-    }
-
-    override fun onClick(hero: Hero) {
-        val intent = Intent(this, HeroDetailActivity::class.java)
-        intent.putExtra("hero", "${hero.thumbnail?.path}.${hero.thumbnail?.extension}")
-
-        startActivity(intent)
     }
 }

@@ -1,3 +1,3 @@
 package com.vinicius.marvelheroes.model
 
-data class DataHeroes(val data: Heroes)
+data class DataHero<T> (val results: T)

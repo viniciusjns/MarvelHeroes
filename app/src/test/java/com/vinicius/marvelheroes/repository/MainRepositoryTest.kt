@@ -1,9 +1,9 @@
 package com.vinicius.marvelheroes.repository
 
 import com.nhaarman.mockitokotlin2.whenever
-import com.vinicius.marvelheroes.model.DataHeroes
+import com.vinicius.marvelheroes.model.Response
 import com.vinicius.marvelheroes.model.Hero
-import com.vinicius.marvelheroes.model.Heroes
+import com.vinicius.marvelheroes.model.DataHero
 import com.vinicius.marvelheroes.rules.TestCoroutineRule
 import com.vinicius.marvelheroes.service.HeroesService
 import org.hamcrest.CoreMatchers.`is`
@@ -72,10 +72,10 @@ class MainRepositoryTest {
         )
     }
 
-    private fun mockDataHero(): DataHeroes {
+    private fun mockDataHero(): Response<List<Hero>> {
         val results = mockHeroes();
-        val heroes = Heroes(results)
+        val heroes = DataHero(results)
 
-        return DataHeroes(heroes)
+        return Response(heroes)
     }
 }

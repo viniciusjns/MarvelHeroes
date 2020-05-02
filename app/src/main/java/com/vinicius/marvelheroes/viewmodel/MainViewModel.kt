@@ -11,16 +11,16 @@ class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : BaseViewModel() {
 
-    val resourceLiveData = MutableLiveData<Resource<List<Hero>>>()
+    val heroesLiveData = MutableLiveData<Resource<List<Hero>>>()
 
     fun getHeroes() {
         viewModelScope.launch {
-            resourceLiveData.value = Resource.loading()
+            heroesLiveData.value = Resource.loading()
             try {
                 val heroes = mainRepository.getHeroes()
-                resourceLiveData.value = Resource.success(heroes)
+                heroesLiveData.value = Resource.success(heroes)
             } catch (t: Throwable) {
-                resourceLiveData.value = Resource.error(t.message)
+                heroesLiveData.value = Resource.error(t.message)
             } finally { }
         }
     }
