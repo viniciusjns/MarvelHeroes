@@ -9,7 +9,7 @@ import com.vinicius.marvelheroes.databinding.ItemHeroColumnBinding
 import com.vinicius.marvelheroes.model.Hero
 import com.vinicius.marvelheroes.utils.extensions.paint
 
-class HeroesColumnAdapter(heroes: List<Hero>, private val onClickHero: OnClickHero) : BaseAdapter<ItemHeroColumnBinding>(heroes) {
+class HeroesColumnAdapter(heroes: List<Hero>, private val onClickHero: OnClickHero) : BaseAdapter<Hero, ItemHeroColumnBinding>(heroes) {
 
     override fun getLayout(): Int = R.layout.item_hero_column
 

@@ -63,8 +63,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OnClick
 
     private fun setupRecyclerView(list: List<Hero>, orientation: Int, isColumn: Boolean) {
         val layoutManager = LinearLayoutManager(this, orientation, false)
-        rvHeroes.adapter = if (isColumn) HeroesColumnAdapter(list, this)
-        else HeroesListAdapter(list, this)
+        rvHeroes.adapter =
+            if (isColumn)
+                HeroesColumnAdapter(list, this)
+            else
+                HeroesListAdapter(list, this)
         rvHeroes.layoutManager = layoutManager
     }
 

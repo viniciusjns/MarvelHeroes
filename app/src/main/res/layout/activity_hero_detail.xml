@@ -29,16 +29,16 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clFooter"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/default_margin">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/labelDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_margin"
                         android:text="@string/description"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textAllCaps="true"
                         android:fontFamily="@font/bangers_regular"
                         app:layout_constraintTop_toTopOf="parent"
@@ -54,6 +54,30 @@
                         tools:text="hero description goes here"
                         app:layout_constraintStart_toStartOf="@+id/labelDesc"
                         app:layout_constraintTop_toBottomOf="@+id/labelDesc"/>
+
+                    <TextView
+                        android:id="@+id/labelComics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:text="@string/comics"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/bangers_regular"
+                        app:layout_constraintStart_toStartOf="@+id/tvDesc"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDesc"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvComic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/default_margin"
+                        android:clipToPadding="false"
+                        tools:listitem="@layout/item_comic"
+                        app:layout_constraintTop_toBottomOf="@+id/labelComics"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -101,6 +125,15 @@
                         app:layout_collapseMode="pin" />
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
             </com.google.android.material.appbar.AppBarLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:src="@drawable/ic_favorite"
+                app:layout_anchor="@id/appbarLayout"
+                app:layout_anchorGravity="right|bottom"/>
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </br.com.zup.multistatelayout.MultiStateLayout>
 </layout>

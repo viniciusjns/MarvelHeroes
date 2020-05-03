@@ -1,5 +1,6 @@
 package com.vinicius.marvelheroes.service
 
+import com.vinicius.marvelheroes.model.Comic
 import com.vinicius.marvelheroes.model.Response
 import com.vinicius.marvelheroes.model.Hero
 import retrofit2.http.GET
@@ -15,5 +16,5 @@ interface HeroesService {
     suspend fun getHeroById(@Path("heroId") heroId: Int): Response<List<Hero>>
 
     @GET("v1/public/characters/{heroId}/comics")
-    suspend fun getComicsByHeroId(heroId: Int)
+    suspend fun getComicsByHeroId(@Path("heroId") heroId: Int): Response<List<Comic>>
 }

@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vinicius.marvelheroes.model.Hero
 
 
-abstract class BaseAdapter<B : ViewDataBinding>(private val heroes: List<Hero>) :
-    RecyclerView.Adapter<BaseAdapter.HeroesViewHolder<B>>() {
+abstract class BaseAdapter<T, B : ViewDataBinding>(private val list: List<T>) :
+    RecyclerView.Adapter<BaseAdapter.ViewHolder<B>>() {
 
     abstract fun getLayout(): Int
 
-    abstract fun onBind(binding: B, hero: Hero)
+    abstract fun onBind(binding: B, any: T)
 
-    override fun onCreateViewHolder(parent: ViewGroup, type: Int) = HeroesViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, type: Int) = ViewHolder(
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(parent.context),
             getLayout(),
@@ -24,14 +24,14 @@ abstract class BaseAdapter<B : ViewDataBinding>(private val heroes: List<Hero>) 
         ) as B
     )
 
-    override fun getItemCount(): Int = heroes.size
+    override fun getItemCount(): Int = list.size
 
-    override fun onBindViewHolder(holder: HeroesViewHolder<B>, position: Int) {
-        val hero = heroes[position]
-        onBind(holder.getBinding(), hero)
+    override fun onBindViewHolder(holder: ViewHolder<B>, position: Int) {
+        val any = list[position]
+        onBind(holder.getBinding(), any)
     }
 
-    class HeroesViewHolder<B : ViewDataBinding>(private val binding: B) :
+    class ViewHolder<B : ViewDataBinding>(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun getBinding(): B = binding
