@@ -2,7 +2,6 @@ package com.vinicius.marvelheroes.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.vinicius.marvelheroes.model.Hero
@@ -15,7 +14,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -37,7 +35,7 @@ class MainViewModelTest {
     @Before
     fun setUp() {
         mainViewModel = MainViewModel(mainRepository)
-        mainViewModel.resourceLiveData.observeForever(observerResource)
+        mainViewModel.heroesLiveData.observeForever(observerResource)
     }
 
     @Test
@@ -48,7 +46,7 @@ class MainViewModelTest {
 
         // acao
         mainViewModel.getHeroes()
-        val value = mainViewModel.resourceLiveData.value?.data
+        val value = mainViewModel.heroesLiveData.value?.data
 
         // verifacao
         assertThat(value, `is`(heroList))
@@ -65,8 +63,8 @@ class MainViewModelTest {
         mainViewModel.getHeroes()
 
         // verificacao
-        assertNotNull(mainViewModel.resourceLiveData.value?.message)
-        assertNull(mainViewModel.resourceLiveData.value?.data)
+        assertNotNull(mainViewModel.heroesLiveData.value?.message)
+        assertNull(mainViewModel.heroesLiveData.value?.data)
         verify(observerResource).onChanged(Resource.error(exception.message))
     }
 

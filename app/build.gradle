@@ -59,6 +59,7 @@ dependencies {
 
     implementation baseDependencies.dagger2
     implementation baseDependencies.dagger2_android_support
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt baseDependencies.dagger2_compiler
     kapt baseDependencies.dagger2_android_processor
 
@@ -74,6 +75,7 @@ dependencies {
     implementation baseDependencies.picasso
     implementation baseDependencies.palette
     implementation baseDependencies.circle_image_view
+    implementation baseDependencies.view_pager2
 
     kapt baseDependencies.arch_lifecycle_compiler
     kapt baseDependencies.data_binding
