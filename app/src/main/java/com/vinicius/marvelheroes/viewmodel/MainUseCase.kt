@@ -4,8 +4,9 @@ import com.vinicius.marvelheroes.model.Hero
 import com.vinicius.marvelheroes.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MainUseCase(
+class MainUseCase @Inject constructor(
     private val mainRepository: MainRepository
 ) {
 

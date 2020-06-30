@@ -1,5 +1,6 @@
 package com.vinicius.marvelheroes.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.vinicius.marvelheroes.model.Comic
 import com.vinicius.marvelheroes.model.Hero
@@ -10,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
 import javax.inject.Inject
 
-class HeroDetailViewModel @Inject constructor(
+class HeroDetailViewModel @ViewModelInject constructor(
     private val mainRepository: MainRepository
 ) : BaseViewModel() {
 

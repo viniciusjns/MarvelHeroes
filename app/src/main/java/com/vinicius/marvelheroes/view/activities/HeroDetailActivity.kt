@@ -13,15 +13,16 @@ import com.vinicius.marvelheroes.model.Resource
 import com.vinicius.marvelheroes.view.activities.MainActivity.HeroConstant.HERO_ID
 import com.vinicius.marvelheroes.view.adapters.ComicsAdapter
 import com.vinicius.marvelheroes.viewmodel.HeroDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_hero_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+@AndroidEntryPoint
 class HeroDetailActivity : BaseActivity<ActivityHeroDetailBinding, HeroDetailViewModel>() {
 
     override fun getLayout(): Int = R.layout.activity_hero_detail
 
-    override fun getViewModelClass(): Class<HeroDetailViewModel>? = HeroDetailViewModel::class.java
+    override fun getViewModelClass(): Class<HeroDetailViewModel> = HeroDetailViewModel::class.java
 
     override fun init() {
         setupToolbar()

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 HashMap<String, String> baseDependencies = rootProject.ext.dependencies
 HashMap<String, String> testDependencies = rootProject.ext.testDependencies
@@ -40,6 +41,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -57,11 +63,8 @@ dependencies {
     implementation baseDependencies.recycler_view
     implementation baseDependencies.constraint_layout
 
-    implementation baseDependencies.dagger2
-    implementation baseDependencies.dagger2_android_support
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt baseDependencies.dagger2_compiler
-    kapt baseDependencies.dagger2_android_processor
+    implementation baseDependencies.hilt
+    implementation baseDependencies.hilt_vm
 
     implementation baseDependencies.okHttp_interceptor
     implementation baseDependencies.gson
@@ -79,6 +82,8 @@ dependencies {
 
     kapt baseDependencies.arch_lifecycle_compiler
     kapt baseDependencies.data_binding
+    kapt baseDependencies.hilt_compiler
+    kapt baseDependencies.hilt_vm_compiler
 
     testImplementation testDependencies.junit
     testImplementation testDependencies.mockito

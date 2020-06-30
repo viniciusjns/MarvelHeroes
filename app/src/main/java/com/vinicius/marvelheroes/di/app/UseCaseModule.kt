@@ -1,14 +1,19 @@
 package com.vinicius.marvelheroes.di.app
 
-import com.vinicius.marvelheroes.repository.MainRepositoryImpl
 import com.vinicius.marvelheroes.viewmodel.MainUseCase
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ActivityRetainedComponent
+import javax.inject.Singleton
 
 @Module
-open class UseCaseModule {
+@InstallIn(ActivityRetainedComponent::class)
+abstract class UseCaseModule {
 
-    @Provides
-    fun provideMainUseCase(mainRepository: MainRepositoryImpl):
-            MainUseCase = MainUseCase(mainRepository)
+    @Binds
+    abstract fun bindMainUseCase(
+        mainUseCase: MainUseCase
+    ): MainUseCase
 }

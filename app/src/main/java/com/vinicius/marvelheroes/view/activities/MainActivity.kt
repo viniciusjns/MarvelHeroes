@@ -16,8 +16,10 @@ import com.vinicius.marvelheroes.view.adapters.HeroesColumnAdapter
 import com.vinicius.marvelheroes.view.adapters.HeroesListAdapter
 import com.vinicius.marvelheroes.view.adapters.OnClickHero
 import com.vinicius.marvelheroes.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OnClickHero {
 
     object HeroConstant {
@@ -28,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OnClick
 
     override fun getLayout(): Int = R.layout.activity_main
 
-    override fun getViewModelClass(): Class<MainViewModel>? = MainViewModel::class.java
+    override fun getViewModelClass(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun init() {
         setupToolbar()

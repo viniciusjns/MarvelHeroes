@@ -2,13 +2,18 @@ package com.vinicius.marvelheroes.di.app
 
 import com.vinicius.marvelheroes.repository.MainRepository
 import com.vinicius.marvelheroes.repository.MainRepositoryImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
+import javax.inject.Singleton
 
 @Module
-open class RepositoryModule {
+@InstallIn(ActivityRetainedComponent::class)
+abstract class RepositoryModule {
 
-    @Provides
-    fun provideMainRepository(mainRepository: MainRepositoryImpl):
-            MainRepository = mainRepository
+    @Binds
+    abstract fun bindMainRepository(
+        mainRepositoryImpl: MainRepositoryImpl
+    ): MainRepository
 }

@@ -1,13 +1,13 @@
 package com.vinicius.marvelheroes.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.vinicius.marvelheroes.model.Hero
 import com.vinicius.marvelheroes.model.Resource
 import com.vinicius.marvelheroes.repository.MainRepository
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainViewModel @ViewModelInject constructor(
     private val mainRepository: MainRepository
 ) : BaseViewModel() {
 
